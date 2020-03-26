@@ -4,8 +4,7 @@ const INITIAL_STATE = {
   loadingNumbers: true,
   totalNumbers: [],
   loadingCountries: true,
-  countriesNumbers: [],
-  mapData: null
+  countriesNumbers: []
 };
 
 export default function cases(state = INITIAL_STATE, action) {
@@ -27,10 +26,6 @@ export default function cases(state = INITIAL_STATE, action) {
       }
       case "@cases/COUNTRIES_REQUEST": {
         draft.loadingCountries = true;
-        break;
-      }
-      case "@cases/MAP_DATA_SUCCESS": {
-        draft.mapData = action.payload;
         break;
       }
       default:

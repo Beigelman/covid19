@@ -63,10 +63,15 @@ export const TotalNumber = styled.div`
   justify-content: space-around;
 `;
 
-export const ContainerMap = styled.div`
-  margin-top: 15px;
+export const ChartContainer = styled.div`
   width: 100%;
-  height: 76vh;
-  padding-bottom: 15px;
-  overflow: hidden;
+  height: 77vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 44px;
+    color: #f7f7f7;
+  }
 `;

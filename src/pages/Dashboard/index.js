@@ -7,11 +7,10 @@ import {
   getCountriesRequest
 } from "../../store/modules/cases/actions";
 
-import { Container, ContainerMap, InfectedCases, Scroll } from "./styles";
+import { Container, ChartContainer, InfectedCases, Scroll } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingProgress from "../../components/LoadingProgress";
 import { numberWithDots } from "../../utils/datatransformers";
-import Map from "../../components/Map";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -115,14 +114,9 @@ export default function Dashboard() {
               <TotalsCard title={"Total recuperados"} numbers={recovered} />
             </Grid>
           )}
-          <Grid container sytle={{ paddinBottom: 15 }}>
-            {loadingNumbers ? (
-              <LoadingProgress />
-            ) : // <ContainerMap>
-            //   <Map countriesNumbers={countriesNumbers} />
-            // </ContainerMap>
-            null}
-          </Grid>
+          <ChartContainer container sytle={{ paddinBottom: 15 }}>
+            {loadingNumbers ? <LoadingProgress /> : <p>Em construção...</p>}
+          </ChartContainer>
         </Grid>
       </Grid>
     </Container>

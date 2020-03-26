@@ -23,10 +23,3 @@ export function getCountriesSuccess(data) {
     payload: data
   };
 }
-
-export function getMapDataSuccess(data) {
-  return {
-    type: "@cases/MAP_DATA_SUCCESS",
-    payload: data
-  };
-}

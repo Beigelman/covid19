@@ -1,12 +1,7 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
-import {
-  getTotalCasesSuccess,
-  getCountriesSuccess,
-  getMapDataSuccess
-} from "./actions";
-import { data } from "../../../components/Map/components/worldMap";
+import { getTotalCasesSuccess, getCountriesSuccess } from "./actions";
 
 export function* getTotalCases() {
   try {
@@ -55,19 +50,6 @@ export function* getCountries() {
       .slice()
       .sort((a, b) => b.confirmed - a.confirmed);
 
-    // const newData = { series: [] };
-    // for (let i of data.series) {
-    //   for (let j of countriesNumbers) {
-    //     if (i.code === j.iso) {
-    //       data.series.push({
-    //         code: String(i.code),
-    //         data: parseFloat(j.confirmed)
-    //       });
-    //     }
-    //   }
-    // }
-
-    // yield put(getMapDataSuccess(newData));
     yield put(getCountriesSuccess(orderedCountries));
   } catch (err) {
     toast.error("Erro ao capturar dados da api");
