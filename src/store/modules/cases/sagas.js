@@ -26,7 +26,7 @@ export function* getCountries() {
           states.push(j);
         }
       }
-      if (states.length >= 0) {
+      if (states.length > 0) {
         const totals = {
           confirmed: 0,
           recovered: 0,
