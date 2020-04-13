@@ -8,9 +8,10 @@ import "react-dates/lib/css/_datepicker.css";
 import "./react_dates_overrides.css";
 import { DateRangePicker } from "react-dates";
 
-import { MyTooltip, ChartContainer, ClearButton } from "./styles";
+import { MyTooltip, ChartContainer, ClearButton, LastUpdate } from "./styles";
+import { connect } from "react-redux";
 
-export default class Charts extends Component {
+class Charts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,6 +72,7 @@ export default class Charts extends Component {
   }
 
   render() {
+    console.log(this.props.lastUpdate);
     function CustomTooltip({ payload, label, active }) {
       if (active) {
         return (
@@ -120,6 +122,21 @@ export default class Charts extends Component {
           <ClearButton type="button" onClick={this.handleClean}>
             Limpar
           </ClearButton>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              padding: "5px 0px 5px 35px",
+            }}
+          >
+            <LastUpdate>
+              {`*Dados atualizados em: ${moment(
+                this.props.lastUpdate ? this.props.lastUpdate : new Date()
+              ).format("DD/MM/YYYY HH:MM")}`}{" "}
+            </LastUpdate>
+            <LastUpdate>*Os dados do gráfico trabalham com D-1</LastUpdate>
+          </div>
         </div>
 
         <AreaChart width={900} height={500} data={this.state.data}>
@@ -148,3 +165,13 @@ export default class Charts extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    lastUpdate: state.cases.countriesNumbers[0]
+      ? state.cases.countriesNumbers[0].lastUpdate
+      : "",
+  };
+};
+
+export default connect(mapStateToProps)(Charts);

@@ -46,3 +46,8 @@ export const ClearButton = styled.button`
   background-color: #fff;
   padding: 11px 11px 9px;
 `;
+
+export const LastUpdate = styled.span`
+  color: #000;
+  font-size: 20;
+`;

@@ -46,7 +46,12 @@ export function* getCountries() {
           totals.active += item.active;
         });
 
-        countriesNumbers.push({ name: i.name, ...totals, states });
+        countriesNumbers.push({
+          name: i.name,
+          ...totals,
+          lastUpdate: states[0].lastUpdate,
+          states,
+        });
       }
     }
 
