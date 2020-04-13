@@ -1,7 +1,9 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import api from "../../../services/api";
+import pyApi from "../../../services/pythonApi";
 import { toast } from "react-toastify";
 import { getTotalCasesSuccess, getCountriesSuccess } from "./actions";
+import moment from "moment";
 
 export function* getTotalCases() {
   try {
@@ -32,12 +34,14 @@ export function* getCountries() {
           recovered: 0,
           deaths: 0,
           active: 0,
-          iso: states[0].iso2
+          iso: states[0].iso2,
         };
 
-        states.forEach(item => {
+        states.forEach((item) => {
           totals.confirmed += item.confirmed;
-          totals.recovered += item.recovered;
+          totals.recovered = item.recovered
+            ? totals.recovered + item.recovered
+            : totals.recovered;
           totals.deaths += item.deaths;
           totals.active += item.active;
         });
@@ -45,6 +49,21 @@ export function* getCountries() {
         countriesNumbers.push({ name: i.name, ...totals, states });
       }
     }
+
+    const recoveredUS = yield call(pyApi.post, "/total-daily", {
+      start: moment(new Date())
+        .subtract(1, "days")
+        .format("MM/DD/YYYY")
+        .replace(/[/]/g, "-"),
+      end: moment(new Date())
+        .subtract(1, "days")
+        .format("MM/DD/YYYY")
+        .replace(/[/]/g, "-"),
+      country: "US",
+    });
+
+    const index = countriesNumbers.findIndex((x) => x.name === "US");
+    countriesNumbers[index].recovered = recoveredUS.data[0].recovered;
 
     const orderedCountries = countriesNumbers
       .slice()
@@ -58,5 +77,5 @@ export function* getCountries() {
 
 export default all([
   takeLatest("@cases/TOTAL_NUMBERS_REQUEST", getTotalCases),
-  takeLatest("@cases/COUNTRIES_REQUEST", getCountries)
+  takeLatest("@cases/COUNTRIES_REQUEST", getCountries),
 ]);

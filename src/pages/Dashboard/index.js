@@ -4,21 +4,22 @@ import ParcialNumbers from "../../components/ParcialNumbers";
 import TotalsCard from "../../components/TotalsCard";
 import {
   getTotalCasesRequest,
-  getCountriesRequest
+  getCountriesRequest,
 } from "../../store/modules/cases/actions";
 
 import { Container, ChartContainer, InfectedCases, Scroll } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingProgress from "../../components/LoadingProgress";
 import { numberWithDots } from "../../utils/datatransformers";
+import Charts from "../../components/Charts";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   // Estado do redux
-  const totalNumbers = useSelector(state => state.cases.totalNumbers);
-  const loadingNumbers = useSelector(state => state.cases.loadingNumbers);
-  const loadingCountries = useSelector(state => state.cases.loadingCountries);
-  const countriesNumbers = useSelector(state => state.cases.countriesNumbers);
+  const totalNumbers = useSelector((state) => state.cases.totalNumbers);
+  const loadingNumbers = useSelector((state) => state.cases.loadingNumbers);
+  const loadingCountries = useSelector((state) => state.cases.loadingCountries);
+  const countriesNumbers = useSelector((state) => state.cases.countriesNumbers);
   // Estado local
   const [confirmed, setConfirmed] = useState(0);
   const [recovered, setRecovered] = useState(0);
@@ -80,9 +81,9 @@ export default function Dashboard() {
 
               <Scroll>
                 <ul>
-                  {countriesNumbers.map(country => {
+                  {countriesNumbers.map((country, index) => {
                     return (
-                      <li key={country.iso}>
+                      <li key={index}>
                         <ParcialNumbers
                           onClick={() => onClickCard(country)}
                           selected={countrySelected === country.name}
@@ -106,7 +107,7 @@ export default function Dashboard() {
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr 1fr",
-                gridGap: 15
+                gridGap: 15,
               }}
             >
               <TotalsCard title={"Total confirmado"} numbers={confirmed} />
@@ -115,7 +116,11 @@ export default function Dashboard() {
             </Grid>
           )}
           <ChartContainer container sytle={{ paddinBottom: 15 }}>
-            {loadingNumbers ? <LoadingProgress /> : <p>Em construção...</p>}
+            {loadingNumbers ? (
+              <LoadingProgress />
+            ) : (
+              <Charts country={countrySelected} />
+            )}
           </ChartContainer>
         </Grid>
       </Grid>
