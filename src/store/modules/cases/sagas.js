@@ -55,19 +55,19 @@ export function* getCountries() {
       }
     }
 
-    // const recoveredUS = yield call(pyApi.post, "/total-daily", {
-    //   start: moment(new Date())
-    //     .subtract(1, "days")
-    //     .format("MM/DD/YYYY")
-    //     .replace(/[/]/g, "-"),
-    //   end: moment(new Date())
-    //     .subtract(1, "days")
-    //     .format("MM/DD/YYYY")
-    //     .replace(/[/]/g, "-"),
-    //   country: "US",
-    // });
-    // const index = countriesNumbers.findIndex((x) => x.name === "US");
-    // countriesNumbers[index].recovered = recoveredUS.data[0].recovered;
+    const recoveredUS = yield call(pyApi.post, "/total-daily", {
+      start: moment(new Date())
+        .subtract(1, "days")
+        .format("MM/DD/YYYY")
+        .replace(/[/]/g, "-"),
+      end: moment(new Date())
+        .subtract(1, "days")
+        .format("MM/DD/YYYY")
+        .replace(/[/]/g, "-"),
+      country: "US",
+    });
+    const index = countriesNumbers.findIndex((x) => x.name === "US");
+    countriesNumbers[index].recovered = recoveredUS.data[0].recovered;
 
     const orderedCountries = countriesNumbers
       .slice()
