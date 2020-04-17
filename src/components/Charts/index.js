@@ -72,7 +72,6 @@ class Charts extends Component {
   }
 
   render() {
-    console.log(this.props.lastUpdate);
     function CustomTooltip({ payload, label, active }) {
       if (active) {
         return (
@@ -139,7 +138,12 @@ class Charts extends Component {
           </div>
         </div>
 
-        <AreaChart width={900} height={500} data={this.state.data}>
+        <AreaChart
+          style={{ marginTop: 45 }}
+          width={900}
+          height={500}
+          data={this.state.data}
+        >
           <Area
             type="monotone"
             dataKey="confirmed"
