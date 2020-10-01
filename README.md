@@ -1,2 +1,2 @@
 # covid19
-Esse é uma dashboard de acompanhamento do avanço dos casos de corona virus pelo mundo
+This is a dashboard to monitor the progress of corona virus cases around the world
